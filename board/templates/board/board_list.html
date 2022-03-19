@@ -17,13 +17,12 @@
           </thead>
           <tbody>
             {% for board in boards %}
-
-              <tr><a href="{% url 'board:detail' board.id %}">
+              <tr>
                 <th>{{ board.id }}</th>
                 <th>{{ board.title }}</th>
                 <th>{{ board.writer }}</th>
                 <th>{{ board.register_time }}</th>
-              </a></tr>
+              </tr>
             {% endfor %}
           </tbody>
         </table>
