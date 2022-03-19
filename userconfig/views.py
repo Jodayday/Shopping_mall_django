@@ -78,3 +78,9 @@ def login(request):
                 message['error'] = "비밀번호가 틀렸습니다."
 
         return render(request, 'userconfig/login.html', message)
+
+
+def logout(request):
+    if request.session.get('user'):
+        del request.session['user']
+    return redirect("/")
