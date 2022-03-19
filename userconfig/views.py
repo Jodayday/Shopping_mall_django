@@ -5,6 +5,7 @@ from django.contrib.auth.hashers import make_password, check_password
 # 패스워드 생성과 체크
 # Create your views here.
 from .models import UserInfo
+from .forms import LoginForm
 
 
 def index(request):
@@ -58,26 +59,8 @@ def login(request):
     """
     로그인 체크 함수 
     """
-    print(dir(request.session))
-    if request.method == "GET":
-        return render(request, 'userconfig/login.html')
-    elif request.method == "POST":
-        username = request.POST.get('username', None)
-        password = request.POST.get('password', None)
-        message = {}
-        if not(username and password):
-            message['error'] = "값을 입력해주세요"
-        else:
-            q = UserInfo.objects.get(user_name=username)
-            # 이름으로 해당키값을 가져옴
-            if check_password(password, q.password):
-                # 비밀번호 체크완료
-                request.session['user'] = q.id
-                return redirect("/")
-            else:
-                message['error'] = "비밀번호가 틀렸습니다."
-
-        return render(request, 'userconfig/login.html', message)
+    form = LoginForm()
+    return render(request, "userconfig/login.html", {"form": form})
 
 
 def logout(request):

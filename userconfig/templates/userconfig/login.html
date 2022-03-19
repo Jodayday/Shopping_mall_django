@@ -17,17 +17,7 @@
         <form method="post" action=".">
           <!-- action에.만 써도 되는게 현재주소로 전송하기에(생략도 가능) -->
           {% csrf_token %}
-          <div class="form-group">
-            <label for="namefield">user_name</label>
-            <input type="text" class="form-control" name="username" id="namefield"placeholder="아무것도 없을때 표시할값">
-          </div>
-
-          <div class="form-group">
-            <label for="passwordfield">password</label>
-            <input type="password" class="form-control" name="password" id="passwordfield" placeholder="Password">
-            
-
-
+          {{ form }}
           <button type="submit" class="btn btn-primary">로그인</button>
         </form>
 
