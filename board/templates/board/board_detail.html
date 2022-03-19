@@ -1,0 +1,31 @@
+{% extends "board/base.html" %}
+
+{% load static %}
+
+{% block contents %}
+  <div class="container">
+    <div class="row mt-5">
+      <div class="col-12">
+        
+
+
+          <div class="form-group">
+            
+            <label for="title">제목</label>
+            <input readonly type="text" class="form-control" value="{{ details.title }}" id="title">
+            
+            <label for="contents">내용</label>
+            <textarea class="form-control" id="contents" readonly>{{ details.contents }}</textarea>
+
+          </div>
+
+
+
+          <a href="{% url 'board:index' %}"><button class="btn btn-primary">돌아가기</button></a>
+
+
+      </div>
+    </div>
+   
+  </div>
+{% endblock %}

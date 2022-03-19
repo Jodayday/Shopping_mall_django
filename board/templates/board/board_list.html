@@ -17,12 +17,13 @@
           </thead>
           <tbody>
             {% for board in boards %}
-            <tr>
-              <th>{{ board.id }}</th>
-              <th>{{ board.title }}</th>
-              <th>{{ board.writer }}</th>
-              <th>{{ board.register_time }}</th>
-            </tr>
+
+              <tr><a href="{% url 'board:detail' board.id %}">
+                <th>{{ board.id }}</th>
+                <th>{{ board.title }}</th>
+                <th>{{ board.writer }}</th>
+                <th>{{ board.register_time }}</th>
+              </a></tr>
             {% endfor %}
           </tbody>
         </table>
@@ -30,7 +31,7 @@
     </div>
     <div class="row">
       <div class="col-12">
-        <button class="btn btn-primary">글쓰기</button>
+        <a href="{% url 'board:write' %}"><button class="btn btn-primary">글쓰기</button></a>
       </div>
     </div>
   </div>

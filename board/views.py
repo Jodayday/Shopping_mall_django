@@ -29,3 +29,8 @@ def write(request,):
         form = BoardForm()
 
     return render(request, "board/board_write.html", {"form": form})
+
+
+def detail(request, pk):
+    model = BoardInfo.objects.get(pk=pk)
+    return render(request, "board/board_detail.html", {"details": model})
