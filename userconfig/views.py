@@ -59,7 +59,14 @@ def login(request):
     """
     로그인 체크 함수 
     """
-    form = LoginForm()
+    if request.method == "GET":
+        form = LoginForm()
+    else:
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            request.session['user'] = form.user
+            return redirect('/')
+
     return render(request, "userconfig/login.html", {"form": form})
 
 
