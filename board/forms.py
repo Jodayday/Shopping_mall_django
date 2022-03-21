@@ -14,3 +14,7 @@ class BoardForm(forms.Form):
             'required': "내용를 입력해주세요"
         },
         label="내용", widget=forms.Textarea)
+    tags = forms.CharField(
+        required=False,
+        label="태그"
+    )

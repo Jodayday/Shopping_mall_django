@@ -10,6 +10,8 @@ class BoardInfo(models.Model):
     writer = models.ForeignKey(
         'userconfig.UserInfo', on_delete=models.CASCADE, verbose_name="작성자")
     # 다른 모델의 값을 참조 포링키
+    tags = models.ManyToManyField('tag.Tag', verbose_name="태그")
+    # m:n 모델
     register_time = models.DateTimeField(
         auto_now_add=True, verbose_name="작성시간")
 

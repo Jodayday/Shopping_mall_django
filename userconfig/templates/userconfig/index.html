@@ -1,0 +1,36 @@
+{% extends "userconfig/base.html" %}
+
+{% block contents %}
+<div class="container">
+
+  <div class="row mt-5">
+    <div class="col-12 text-center">
+      <h1>홈페이지</h1>
+    </div>
+  </div>
+
+  <div class="row mt-5">
+  {% if request.session.user %}
+  <div class="col-12">
+    <button class="btn btn-primary col-12" onclick="location.href='/user/logout/'">로그아웃</button>
+  </div>
+  {% else %}
+  <div class="col-6">
+    <button class="btn btn-primary col-12" onclick="location.href='/user/login/'">로그인</button>
+  </div>
+  <div class="col-6">
+    <button class="btn btn-primary col-12" onclick="location.href='/user/'">회원가입</button>
+  </div>
+</div>
+  {% endif%}
+ 
+  <div class="row mt-3">
+    <div class="col-12">
+      <button class="btn btn-primary col-12" onclick="location.href='/board/'">게시물보기</button>
+    </div>
+  </div>
+
+</div>
+
+
+{% endblock %}

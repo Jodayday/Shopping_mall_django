@@ -17,7 +17,7 @@
           </thead>
           <tbody>
             {% for board in boards %}
-              <tr>
+              <tr onclick="location.href='/board/{{ board.id }}/'">
                 <th>{{ board.id }}</th>
                 <th>{{ board.title }}</th>
                 <th>{{ board.writer }}</th>
@@ -34,7 +34,6 @@
           <ul class="pagination justify-content-center">
 
             {% if boards.has_previous %}
-            
             <li class="page-item">
               <a href="?p={{ boards.previous_page_number }}" class="page-link">이전으로</a>
             </li>

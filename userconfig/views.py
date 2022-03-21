@@ -9,12 +9,7 @@ from .forms import LoginForm
 
 
 def index(request):
-    user = request.session.get("user", None)
-    if user:
-        userinfo = UserInfo.objects.get(pk=user)
-        return HttpResponse("로그인을 했구나 {}아 반갑다!".format(userinfo))
-
-    return HttpResponse("hello")
+    return render(request, "userconfig/index.html")
 
 
 def register(request):

@@ -17,11 +17,14 @@
             <label for="contents">내용</label>
             <textarea class="form-control" id="contents" readonly>{{ details.contents }}</textarea>
 
+            <label for="tags">태그</label>
+            <span id="tags" class="form-control">{{ details.tags.all|join:", " }}</span>
+            
           </div>
 
 
 
-          <a href="{% url 'board:index' %}"><button class="btn btn-primary">돌아가기</button></a>
+          <a href="{% url 'board:index' %}" class="btn btn-primary mt-2">돌아가기</a>
 
 
       </div>

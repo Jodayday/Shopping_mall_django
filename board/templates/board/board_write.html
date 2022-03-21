@@ -20,6 +20,7 @@
             {% else %}
             <input type="{{ field.field.widget.input_type }}" class="form-control" name="{{ field.name }}" id="{{ field.id_for_label }}"placeholder="{{ field.label }}">
             {% endifequal %}
+            
           </div>
 
           {% if field.errors %}
@@ -27,8 +28,8 @@
           {% endif %}
 
           {% endfor %}
-
-          <button type="submit" class="btn btn-primary">글쓰기</button>
+          <button class="btn btn-primary mt-4" type="submit">글쓰기</button>
+          <a href="{% url 'board:index' %}" class="btn btn-primary mt-4">돌아가기</a>
         </form>
 
       </div>
