@@ -4,6 +4,14 @@
 
 {% block contents %}
   <div class="container">
+
+    <div class="row mt-5">
+      <div class="col-12 text-center">
+        <a href="{% url 'index' %}">home</a>
+        <h1>{{details.id}} 번째 글</h1>
+      </div>
+
+
     <div class="row mt-5">
       <div class="col-12">
         
@@ -18,7 +26,13 @@
             <textarea class="form-control" id="contents" readonly>{{ details.contents }}</textarea>
 
             <label for="tags">태그</label>
-            <span id="tags" class="form-control">{{ details.tags.all|join:", " }}</span>
+            <span id="tags" class="form-control">
+              {% if details.tags.all %}
+              {{ details.tags.all|join:", " }}
+              {% else %}
+              등록된 태그가 없습니다.
+              {% endif %}
+            </span>
             
           </div>
 

@@ -10,7 +10,7 @@ class BoardInfo(models.Model):
     writer = models.ForeignKey(
         'userconfig.UserInfo', on_delete=models.CASCADE, verbose_name="작성자")
     # 다른 모델의 값을 참조 포링키
-    tags = models.ManyToManyField('tag.Tag', verbose_name="태그")
+    tags = models.ManyToManyField('Tag', verbose_name="태그")
     # m:n 모델
     register_time = models.DateTimeField(
         auto_now_add=True, verbose_name="작성시간")
@@ -26,3 +26,16 @@ class BoardInfo(models.Model):
         "개별사용자 명칭"
         verbose_name_plural = "게시판"
         "복수사용자 명칭"
+
+
+class Tag(models.Model):
+    name = models.CharField(max_length=32, verbose_name="태그")
+    create_time = models.DateTimeField(auto_now_add=True, verbose_name="생성시간")
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        db_table = "TagInfo_table"
+        verbose_name = "태그"
+        verbose_name_plural = "태그들"

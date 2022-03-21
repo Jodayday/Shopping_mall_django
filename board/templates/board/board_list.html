@@ -4,12 +4,20 @@
 
 {% block contents %}
   <div class="container">
+
+    <div class="row mt-5">
+      <div class="col-12 text-center">
+        <a href="{% url 'index' %}">home</a>
+        <h1>방명록</h1>
+      </div>
+   
+    </div>
     <div class="row mt-5">
       <div class="col-12">
         <table class="table">
           <thead>
             <tr>
-              <th>순번</th>
+              <th>게시글</th>
               <th>제목</th>
               <th>아이디</th>
               <th>일시</th>
@@ -38,22 +46,25 @@
               <a href="?p={{ boards.previous_page_number }}" class="page-link">이전으로</a>
             </li>
               {% else %}
-              <li class="page-item disabled">
+            <li class="page-item disabled">
               <a href="#" class="page-link ">이전으로</a>
             </li>
               {% endif %}
 
             <li class="page-item active">
-              <a href="" class="page-link">{{ boards.number }}/{{boards.paginator.num_pages}}</a>
+              <a href="." class="page-link">{{ boards.number }}/{{boards.paginator.num_pages}}</a>
             </li>
 
-            <li class="page-item">
-              {% if boards.has_next %}
-              <a href="?p={{ boards.next_page_number }}" class="page-link">다음으로</a>
+            {% if boards.has_next %}
+              <li class="page-item">
+                <a href="?p={{ boards.next_page_number }}" class="page-link">다음으로</a>
+              </li>
               {% else %}
-              <a href="#" class="page-link disabled ">다음으로</a>
+              <li class="page-item disabled">
+                <a href="#" class="page-link ">다음으로</a>
+              </li>
               {% endif %}
-            </li>
+
 
           </ul>
         </nav>
