@@ -1,6 +1,7 @@
 from django.http import Http404
 from django.shortcuts import redirect, render
 from django.core.paginator import Paginator
+from django.urls import reverse
 
 # Create your views here.
 from .models import BoardInfo
@@ -24,7 +25,7 @@ def index(request):
 def write(request,):
 
     if not request.session.get('user'):
-        return redirect("/user/")
+        return redirect(reverse("user:login"))
 
     if request.method == "POST":
         form = BoardForm(request.POST)

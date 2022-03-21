@@ -5,6 +5,7 @@
     
     <div class="row mt-5">
       <div class="col-12 text-center">
+        <a href="{% url 'index' %}">home</a>
         <h1>회원가입</h1>
       </div>
     </div>
@@ -16,26 +17,27 @@
           <!-- action에.만 써도 되는게 현재주소로 전송하기에(생략도 가능) -->
           {% csrf_token %}
           <div class="form-group">
-            <label for="namefield">user_name</label>
-            <input type="text" class="form-control" name="username" id="namefield"placeholder="아무것도 없을때 표시할값">
+            <label for="namefield">사용할 이름</label>
+            <input type="text" class="form-control" name="username" id="namefield"placeholder="사용할 이름">
           </div>
 
           <div class="form-group">
-            <label for="eamilfield">user_email</label>
-            <input type="email" class="form-control" name="useremail" id="eamilfield"placeholder="아무것도 없을때 표시할값">
+            <label for="eamilfield">이메일</label>
+            <input type="email" class="form-control" name="useremail" id="eamilfield"placeholder="abc@naver.com">
           </div>
 
           <div class="form-group">
-            <label for="passwordfield">password</label>
-            <input type="password" class="form-control" name="password" id="passwordfield" placeholder="Password">
+            <label for="passwordfield">비밀번호</label>
+            <input type="password" class="form-control" name="password" id="passwordfield" placeholder="사용할 비밀번호">
             
           </div>
           <div class="form-group">
-            <label for="repasswordfield">password check</label>
-            <input type="password" class="form-control"name="repassword" id="repasswordfield" placeholder="Password">
+            <label for="repasswordfield">비밀번호 확인</label>
+            <input type="password" class="form-control"name="repassword" id="repasswordfield" placeholder="비밀번호 확인">
           </div>
 
-          <button type="submit" class="btn btn-primary">등록</button>
+          <button type="submit" class="btn btn-primary mt-3">회원 가입 완료</button>
+          <a href="{% url 'user:login' %}" class="btn btn-primary mt-3">로그인 이동</a>
         </form>
 
       </div>

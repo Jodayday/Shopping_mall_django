@@ -28,9 +28,12 @@ class LoginForm(forms.Form):
             try:
                 user = UserInfo.objects.get(user_name=username)
             except UserInfo.DoesNotExist:
-                self.add_error("username", "아이디가 없습니다.")
+                self.add_error("username", "가입하신 정보가 없거나 비밀번호가 틀렸습니다.")
+                return
+            except UserInfo.MultipleObjectsReturned:
+                self.add_error("username", "같은 이름이 있습니다.")
                 return
             if not check_password(password, user.password):
-                self.add_error("password", "비밀번호가 틀렸습니다.")
+                self.add_error("username", "가입하신 정보가 없거나 비밀번호가 틀렸습니다.")
             else:
                 self.user = user.id
