@@ -1,5 +1,6 @@
 from django.http import Http404
 from django.shortcuts import redirect, render
+from django.core.paginator import Paginator
 
 # Create your views here.
 from .models import BoardInfo
@@ -8,12 +9,19 @@ from userconfig.models import UserInfo
 
 
 def index(request):
-    boards = BoardInfo.objects.all().order_by("-id")
+
+    all_boards = BoardInfo.objects.all().order_by("-id")
+    page = int(request.GET.get("p", 1))
+    # 페이지 번호 받을변수 p
+    paginator = Paginator(all_boards, 6)
+    # 페이징 수
+    boards = paginator.get_page(page)
 
     return render(request, "board/board_list.html", {"boards": boards})
 
 
 def write(request,):
+
     if not request.session.get('user'):
         return redirect("/user/")
 
