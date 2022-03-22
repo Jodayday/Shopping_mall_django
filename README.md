@@ -23,4 +23,11 @@ django 3.2.8
 ### views 구현
 
         0. 함수 기반
-        1. 클래스 기반
+        1. 클래스 기반(제네릭 뷰)
+
+### user app, 사용된 함수
+
+        1. from django.contrib.auth.hashers import make_password
+        2. (내장된 클래스 기반 작성법)[https://docs.djangoproject.com/en/4.0/topics/class-based-views/generic-display/#built-in-class-based-generic-views]
+        3. form_valid 정상완료시 동작하는 함수
+        > 해당함수를 이용해서 form의 값을 가져와서 세션연결함

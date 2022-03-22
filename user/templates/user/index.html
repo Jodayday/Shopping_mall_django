@@ -1,0 +1,7 @@
+{% extends "user/base.html" %}
+
+{% block contents %}
+<a href="{% url 'user:register' %}">회원가입</a>
+<a href="{% url 'user:login' %}">로그인</a>
+<p>{{ user }}</p>
+{% endblock %}
