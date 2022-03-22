@@ -2,7 +2,7 @@
 
 ## 0.배포중
 
-[작성중인페이지](joday.pythonanywhere.com)
+[작성중인페이지](http://joday.pythonanywhere.com/)
 
 ## 1.참조사이트
 
