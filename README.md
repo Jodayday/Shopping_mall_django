@@ -1,5 +1,9 @@
 # djang를 사용한 유저,게시판 기능 작성
 
+## 0.배포중
+
+[작성중인페이지](joday.pythonanywhere.com)
+
 ## 1.참조사이트
 
 [request의 속성들](https://runebook.dev/ko/docs/django/ref/request-response) :
