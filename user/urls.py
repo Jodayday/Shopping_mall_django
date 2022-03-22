@@ -5,5 +5,5 @@ app_name = "user"
 
 
 urlpatterns = [
-    path('', index, name="index")
+    # path('', index, name="index")
 ]

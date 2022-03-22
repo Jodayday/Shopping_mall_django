@@ -5,5 +5,5 @@ app_name = "shopping"
 
 
 urlpatterns = [
-    path('', index, name="index")
+    # path('', index, name="index")
 ]

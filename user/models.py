@@ -12,3 +12,6 @@ class User(models.Model):
         db_table = "user_table"
         verbose_name = "유저들"
         verbose_name_plural = "유저"
+
+    def __str__(self) -> str:
+        return self.email
