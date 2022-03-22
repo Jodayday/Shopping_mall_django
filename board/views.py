@@ -47,7 +47,7 @@ def write(request,):
                 # 반환값 : 해당값, 생성여부
                 board.tags.add(_tag)
 
-            return redirect("/board/")
+            return redirect(reverse("board:index"))
     else:
         form = BoardForm()
 

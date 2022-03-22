@@ -1,8 +1,11 @@
 # djang를 사용한 유저,게시판 기능 작성
 
-## 0.배포중
+## 0.배포
 
-[작성중인페이지](joday.pythonanywhere.com)
+[작성중인페이지](http://joday.pythonanywhere.com/)
+Python 3.9.5
+Django 3.2.3
+{% ifequal %} 사용시 에러발생
 
 ## 1.참조사이트
 
