@@ -5,7 +5,7 @@
 [작성중인페이지](http://joday.pythonanywhere.com/)
 Python 3.9.5
 Django 3.2.3
-{% ifequal %} 사용시 에러발생
+{% ifequal %} 사용시 에러발생 >> 사용하지 않는다고 한다.
 
 ## 1.참조사이트
 
