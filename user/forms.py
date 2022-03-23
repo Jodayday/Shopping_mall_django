@@ -79,5 +79,6 @@ class LoginForm(forms.Form):
                 return
             if check_password(_p1, _u.password):
                 self.user = _u.id
+                # self.user --> views.LoginView의 form.user로 사용된다.
             else:
                 self.add_error("email", "가입정보가 없습니다..")

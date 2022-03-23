@@ -1,0 +1,53 @@
+{% extends "product/base.html" %}
+
+{% load humanize %}
+<!-- 보기편한 필터를 설정할수있음 -->
+{% block contents %}
+
+<div class="container">
+    
+    <div class="row mt-5">
+      <div class="col-12 text-center">
+        <a href="{% url 'index' %}">home</a>
+        <h1>상품목록</h1>
+      </div>
+    </div>
+
+    <div class="row mt-5">
+      <div class="col-12">
+        <table class="table table-light">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col" >등록번호</th>
+              <th scope="col" >상품명</th>
+              <th scope="col" >가격</th>
+              <th scope="col" >등록날짜</th>
+            </tr>
+          </thead>
+          <tbody class="text-dark">
+            {% for product in products %}
+            <tr>
+              <th scope="row">{{ product.id }}</th>
+              <th >{{ product.name }}</th>
+              <th >{{ product.price|intcomma }} 원</th>
+              <!-- humanize의 필터를 사용했음 -->
+              <th >{{ product.time|date:'Y-m-d H:i' }}</th>
+              <!-- django 내장 템플릿 태그 및 필터 사용  -->
+            </tr>
+            {% endfor %}
+          </tbody>
+
+        </table>
+
+
+
+
+
+      </div>
+    </div>
+    
+  </div>
+  
+
+
+{% endblock %}
