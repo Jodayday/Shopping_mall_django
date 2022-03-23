@@ -1,0 +1,36 @@
+{% extends "product/base.html" %}
+{% load humanize %}
+{% block contents %}
+
+<div class="container">
+    
+    <div class="row mt-5">
+      <div class="col-12 text-center">
+        <a href="{% url 'index' %}">home</a>
+        <h1>{{ product.name }}</h1>
+      </div>
+    </div>
+
+    <div class="row mt-5">
+      <div class="col-12">
+        <!-- {{ error }} -->
+        <a href="{% url 'shopping:index' %}">목록으로</a>
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">{{ product.name }}</h4>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">가격: {{ product.price|intcomma }} </li>
+            <li class="list-group-item">설명: {{product.description|safe}} </li>
+            <!-- 태그가 문자열로 저장되어있지만 safe를 사용하면 html코드로 변환해서 보여줌 -->
+            <li class="list-group-item">수량: {{product.stock}} </li>
+          </ul>
+        </div>
+
+
+      </div>
+    </div>
+
+  </div>
+
+{% endblock %}

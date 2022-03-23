@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView, FormView
+from django.views.generic import ListView, FormView, DetailView
 
 # Create your views here.
 
@@ -20,3 +20,10 @@ class ProductCreateView(FormView):
     template_name = "product/register_product.html"
     form_class = ProductForm
     success_url = "/shop/"
+
+
+class ProductDetail(DetailView):
+    model = Product
+    template_name = "product/product_detail.html"
+    context_object_name = "product"
+    # queryset = Product.objects.all()
