@@ -1,6 +1,7 @@
 
 from django import forms
-from shopping.models import Product
+from shopping.models import Product, Order
+from user.models import User
 
 
 class ProductForm(forms.Form):
@@ -34,7 +35,24 @@ class OrderForm(forms.Form):
     product = forms.IntegerField(label="상품", widget=forms.HiddenInput)
     quantity = forms.IntegerField(label="수량",)
 
+    def __init__(self, request, *args, **kwargs):
+        # request를 폼에서 엑세스하기 위해 가져옴
+        super().__init__(*args, **kwargs)
+        self.request = request
+
     def clean(self):
         cleaned_data = super().clean()
         product = cleaned_data.get("product")
         quantity = cleaned_data.get("quantity")
+        user = self.request.session.get('user')
+
+        if product and quantity and user:
+            order = Order(
+                user=User.objects.get(pk=user),
+                product=Product.objects.get(pk=product),
+                quantity=quantity,
+            )
+            order.save()
+        else:
+            self.product = product
+            self.add_error("quantity", "구매할 수량을 입력해주세요.")

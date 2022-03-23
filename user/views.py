@@ -27,5 +27,5 @@ class LoginView(FormView):
 
     def form_valid(self, form):
         self.request.session['user'] = form.user
-        # self안에 request가 존재,    formclass에서 가져온 값
+        # self안에 request가 존재,    formClass에서 가져온 값
         return super().form_valid(form)
