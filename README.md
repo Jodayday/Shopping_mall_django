@@ -38,3 +38,30 @@ django 3.2.8
 [서머노트](https://summernote.org/getting-started/#requires-html5-doctype)
 
 > 저장을 base64 형태로 sql에 저장, 만족스럽지 못한 동작 -> 따로 폴더가 생기고 거기에 차곡차곡 이미지가 저장되었으면 좋겠음
+
+#### 팁
+
+        1.
+
+"""
+def get_context_data(self, **kwargs): # 값을 추가하고 싶을때
+context = super().get_context_data(**kwargs)
+context['form'] = OrderForm(self.request) # 폼클래스 생성하면서 request전달
+return context
+
+def get_form_kwargs(self, **kwargs): # 어떤인자값을 전달할지 설정하는 함수
+kw = super().get_form_kwargs(**kwargs)
+kw.update({
+'request': self.request
+})
+return kw
+
+"""
+두개 비슷하게 사용한다.
+
+        2.
+
+"""
+def form_valid(self, form): #성공했을때 실행
+def form_invalid(self, form): #실패했을때 실행
+"""
