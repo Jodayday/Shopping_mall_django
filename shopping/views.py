@@ -44,6 +44,7 @@ class OrderView(FormView):
     success_url = "/shop/"
 
     def form_invalid(self, form):
+        # 실패했을때 동작함
         return redirect(reverse("shopping:detail", args=(form.product,)))
 
     def get_form_kwargs(self, **kwargs):

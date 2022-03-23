@@ -2,6 +2,7 @@
 from django import forms
 from shopping.models import Product, Order
 from user.models import User
+from django.db import transaction
 
 
 class ProductForm(forms.Form):
@@ -47,12 +48,17 @@ class OrderForm(forms.Form):
         user = self.request.session.get('user')
 
         if product and quantity and user:
-            order = Order(
-                user=User.objects.get(pk=user),
-                product=Product.objects.get(pk=product),
-                quantity=quantity,
-            )
-            order.save()
+            with transaction.atomic():
+                # db 트렌젝션 설정
+                p = Product.objects.get(pk=product)
+                order = Order(
+                    user=User.objects.get(pk=user),
+                    product=p,
+                    quantity=quantity,
+                )
+                order.save()
+                p.stock -= quantity
+                p.save()
         else:
             self.product = product
             self.add_error("quantity", "구매할 수량을 입력해주세요.")
