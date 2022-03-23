@@ -1,0 +1,41 @@
+{% extends "product/base.html" %}
+
+{% block contents %}
+
+<div class="container">
+    
+    <div class="row mt-5">
+      <div class="col-12 text-center">
+        <a href="{% url 'index' %}">home</a>
+        <h1>상품등록</h1>
+      </div>
+    </div>
+
+    <div class="row mt-5">
+      <div class="col-12">
+        <!-- {{ error }} -->
+        <form method="post" action=".">
+          <!-- action에.만 써도 되는게 현재주소로 전송하기에(생략도 가능) -->
+          {% csrf_token %}
+          {% for field in form %}
+          <div class="form-group">
+            <label for="{{field.id_for_label }}">{{ field.label }}</label>
+            {% if field.name == "description"  %}
+            <textarea placeholder="{{ field.label }}" class="form-control" name="{{ field.name }}" id="{{field.id_for_label }}" ></textarea>
+            {% else %}
+            <input type="{{field.field.widget.input_type}}" class="form-control" name="{{ field.name }}" id="{{field.id_for_label }}"placeholder="{{ field.label }}">
+            {% endif %}
+          </div>
+          {% if field.errors %}
+          <span>{{ field.errors }}</span>
+          {% endif %}
+          {% endfor %}
+          <button type="submit" class="btn btn-primary mt-3">상품등록</button>
+        </form>
+
+      </div>
+    </div>
+
+  </div>
+
+{% endblock %}

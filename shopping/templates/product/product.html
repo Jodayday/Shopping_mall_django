@@ -21,6 +21,7 @@
               <th scope="col" >등록번호</th>
               <th scope="col" >상품명</th>
               <th scope="col" >가격</th>
+              <th scope="col" >수량</th>
               <th scope="col" >등록날짜</th>
             </tr>
           </thead>
@@ -31,6 +32,7 @@
               <th >{{ product.name }}</th>
               <th >{{ product.price|intcomma }} 원</th>
               <!-- humanize의 필터를 사용했음 -->
+              <th >{{ product.stock }}</th>
               <th >{{ product.time|date:'Y-m-d H:i' }}</th>
               <!-- django 내장 템플릿 태그 및 필터 사용  -->
             </tr>
