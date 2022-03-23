@@ -4,7 +4,7 @@ from django.views.generic import ListView, FormView, DetailView
 # Create your views here.
 
 from shopping.models import Product, Order
-from shopping.forms import ProductForm
+from shopping.forms import ProductForm, OrderForm
 
 
 class ProductListView(ListView):
@@ -24,6 +24,18 @@ class ProductCreateView(FormView):
 
 class ProductDetail(DetailView):
     model = Product
+    # queryset = Product.objects.all()
+    # 모델과 쿼리셋의 차이는 뭘까?
     template_name = "product/product_detail.html"
     context_object_name = "product"
-    # queryset = Product.objects.all()
+
+    def get_context_data(self, **kwargs):
+        # 값을 추가하고 싶을때
+        context = super().get_context_data(**kwargs)
+        context['form'] = OrderForm()
+        return context
+
+
+class OrderView(FormView):
+    form_class = OrderForm
+    success_url = "/shop/"

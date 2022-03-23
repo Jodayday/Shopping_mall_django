@@ -28,3 +28,13 @@ class ProductForm(forms.Form):
                 stock=stock,
             )
             _p.save()
+
+
+class OrderForm(forms.Form):
+    product = forms.IntegerField(label="상품", widget=forms.HiddenInput)
+    quantity = forms.IntegerField(label="수량",)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        product = cleaned_data.get("product")
+        quantity = cleaned_data.get("quantity")
