@@ -41,7 +41,7 @@ django 3.2.8
 
 #### 팁
 
-1.            """
+1.             """
           def get_context_data(self, **kwargs): # 값을 추가하고 싶을때
           context = super().get_context_data(**kwargs)
           context['form'] = OrderForm(self.request) # 폼클래스 생성하면서 request전달
@@ -59,7 +59,7 @@ django 3.2.8
 
 두개 비슷하게 사용한다.
 
-2.           """
+2.            """
           def form_valid(self, form): #성공했을때 실행
           def form_invalid(self, form): #실패했을때 실행
           """
