@@ -1,11 +1,12 @@
 
 from django.shortcuts import redirect, render
-from django.views.generic import ListView, FormView, DetailView
 from django.urls import reverse
-# Create your views here.
+from django.views.generic import DetailView, FormView, ListView
 
-from shopping.models import Product, Order
-from shopping.forms import ProductForm, OrderForm
+from shopping.forms import OrderForm, ProductForm
+from shopping.models import Order, Product
+
+# Create your views here.
 
 
 class ProductListView(ListView):
@@ -25,8 +26,9 @@ class ProductCreateView(FormView):
 
 class ProductDetail(DetailView):
     model = Product
+    # list 할 모델 선정 (모든 값이 나옴)
     # queryset = Product.objects.all()
-    # 모델과 쿼리셋의 차이는 뭘까?
+    # 모델과 쿼리셋의 차이는 조건값만 할지 아닐지 정하는것
     template_name = "product/product_detail.html"
     context_object_name = "product"
 
@@ -54,3 +56,16 @@ class OrderView(FormView):
             'request': self.request
         })
         return kw
+
+
+class ProductOrderView(ListView):
+    template_name = "order/order.html"
+    context_object_name = "Orders"
+
+    def get_queryset(self):
+        queryset = Order.objects.filter(
+            user__pk=self.request.session.get('user'))
+        # order_model의 user는 User_model의 포링키
+        print(self.request.session.get('user'))
+        return queryset
+        # queryset를 오버라이딩 해서 재지정함
