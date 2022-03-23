@@ -35,3 +35,6 @@ django 3.2.8
 [내장된 클래스 기반 작성법](https://docs.djangoproject.com/en/4.0/topics/class-based-views/generic-display/#built-in-class-based-generic-views)
 [내장 템플릿 태그 및 필터](https://docs.djangoproject.com/en/4.0/ref/templates/builtins/)
 [django.contrib.humanize](https://docs.djangoproject.com/en/4.0/ref/contrib/humanize/)
+[서머노트](https://summernote.org/getting-started/#requires-html5-doctype)
+
+> 저장을 base64 형태로 sql에 저장, 만족스럽지 못한 동작 -> 따로 폴더가 생기고 거기에 차곡차곡 이미지가 저장되었으면 좋겠음
