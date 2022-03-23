@@ -43,20 +43,20 @@ django 3.2.8
 
         1.
 
-"""
-def get_context_data(self, **kwargs): # 값을 추가하고 싶을때
-context = super().get_context_data(**kwargs)
-context['form'] = OrderForm(self.request) # 폼클래스 생성하면서 request전달
-return context
+        """
+        def get_context_data(self, **kwargs): # 값을 추가하고 싶을때
+        context = super().get_context_data(**kwargs)
+        context['form'] = OrderForm(self.request) # 폼클래스 생성하면서 request전달
+        return context
 
-def get_form_kwargs(self, **kwargs): # 어떤인자값을 전달할지 설정하는 함수
-kw = super().get_form_kwargs(**kwargs)
-kw.update({
-'request': self.request
-})
-return kw
+        def get_form_kwargs(self, **kwargs): # 어떤인자값을 전달할지 설정하는 함수
+        kw = super().get_form_kwargs(**kwargs)
+        kw.update({
+        'request': self.request
+        })
+        return kw
 
-"""
+        """
 두개 비슷하게 사용한다.
 
         2.
