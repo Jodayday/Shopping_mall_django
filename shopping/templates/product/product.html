@@ -32,7 +32,7 @@
               <th ><a href="{% url 'shopping:detail' product.id  %}">{{ product.name }}</a></th>
               <th >{{ product.price|intcomma }} 원</th>
               <!-- humanize의 필터를 사용했음 -->
-              <th >{{ product.stock }}</th>
+              <th >{{ product.stock|intcomma }}</th>
               <th >{{ product.time|date:'Y-m-d H:i' }}</th>
               <!-- django 내장 템플릿 태그 및 필터 사용  -->
             </tr>

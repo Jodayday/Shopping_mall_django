@@ -2,7 +2,6 @@
 from django import forms
 from shopping.models import Product, Order
 from user.models import User
-from django.db import transaction
 
 
 class ProductForm(forms.Form):
@@ -17,19 +16,13 @@ class ProductForm(forms.Form):
 
     def clean(self):
         cleaned_data = super().clean()
-        name = cleaned_data.get('name')
+        name1 = cleaned_data.get('name')
         price = cleaned_data.get('price')
         description = cleaned_data.get('description')
         stock = cleaned_data.get('stock')
 
-        if name and price and description and stock:
-            _p = Product(
-                name=name,
-                price=price,
-                description=description,
-                stock=stock,
-            )
-            _p.save()
+        if not (name1 and price and description and stock):
+            self.add_error("name", "누락된 값이 있습니다.")
 
 
 class OrderForm(forms.Form):
@@ -45,20 +38,6 @@ class OrderForm(forms.Form):
         cleaned_data = super().clean()
         product = cleaned_data.get("product")
         quantity = cleaned_data.get("quantity")
-        user = self.request.session.get('user')
 
-        if product and quantity and user:
-            with transaction.atomic():
-                # db 트렌젝션 설정
-                p = Product.objects.get(pk=product)
-                order = Order(
-                    user=User.objects.get(pk=user),
-                    product=p,
-                    quantity=quantity,
-                )
-                order.save()
-                p.stock -= quantity
-                p.save()
-        else:
-            self.product = product
+        if not quantity:
             self.add_error("quantity", "구매할 수량을 입력해주세요.")

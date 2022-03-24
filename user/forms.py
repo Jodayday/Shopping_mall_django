@@ -1,7 +1,7 @@
 from django import forms
 
 from user.models import User
-from django.contrib.auth.hashers import make_password, check_password
+from django.contrib.auth.hashers import check_password
 
 
 class RegisterForm(forms.Form):
@@ -38,12 +38,6 @@ class RegisterForm(forms.Form):
         if _p1 and _p2:
             if _p1 != _p2:
                 self.add_error("repassword", '비밀번호가 다릅니다.')
-            else:
-                user = User(
-                    email=_e1,
-                    password=make_password(_p1),
-                )
-                user.save()
 
 
 class LoginForm(forms.Form):
@@ -77,8 +71,8 @@ class LoginForm(forms.Form):
             except User.MultipleObjectsReturned:
                 self.add_error("email", "중복가입된 사용자 입니다.")
                 return
-            if check_password(_p1, _u.password):
-                self.user = _u.id
-                # self.user --> views.LoginView의 form.user로 사용된다.
-            else:
+            if not check_password(_p1, _u.password):
                 self.add_error("email", "가입정보가 없습니다..")
+            # else:
+                # self.user = _u.id
+                # self.user --> views.LoginView의 form.user로 사용된다.
