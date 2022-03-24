@@ -110,7 +110,8 @@ class ProductOrderView(ListView):
         # queryset를 오버라이딩 해서 재지정함
 
 
-class ProductAPI(generics.GenericAPIView, mixins.ListModelMixin):
+class ProductsAPI(generics.GenericAPIView, mixins.ListModelMixin):
+    """상품목록 api"""
     serializer_class = ProductSerializers
     # 테이터 검증을 위한(필터의 역할)
 
@@ -121,3 +122,18 @@ class ProductAPI(generics.GenericAPIView, mixins.ListModelMixin):
     def get(self, request, *args, **kwargs):
         # get요청 동작
         return self.list(request, *args, **kwargs)
+
+
+class ProductAPI(generics.GenericAPIView, mixins.RetrieveModelMixin):
+    """상품 api"""
+    serializer_class = ProductSerializers
+    # 테이터 검증을 위한(필터의 역할)
+
+    def get_queryset(self):
+        # 사용할 데이터 호출
+        return Product.objects.all().order_by("id")
+        # url에서 pk값 연결, retrieve에서 pk값에 해당되는걸 꺼내 표시
+
+    def get(self, request, *args, **kwargs):
+        # get요청 동작
+        return self.retrieve(request, *args, **kwargs)

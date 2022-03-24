@@ -8,3 +8,4 @@ class ProductSerializers(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ('name', 'price', 'stock')
+        # api로 제공할 필드선언
