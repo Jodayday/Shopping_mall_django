@@ -6,6 +6,10 @@ from django.db import transaction
 # db 트렌젝션
 from django.utils.decorators import method_decorator
 # @ 데코레이터를 사용하기
+from rest_framework import generics, mixins
+# rest_API 제네릭뷰 사용
+
+from shopping.serializers import ProductSerializers
 from user.decorators import login_required, login_level
 
 
@@ -104,3 +108,16 @@ class ProductOrderView(ListView):
         print(self.request.session.get('user'))
         return queryset
         # queryset를 오버라이딩 해서 재지정함
+
+
+class ProductAPI(generics.GenericAPIView, mixins.ListModelMixin):
+    serializer_class = ProductSerializers
+    # 테이터 검증을 위한(필터의 역할)
+
+    def get_queryset(self):
+        # 사용할 데이터 호출
+        return Product.objects.all().order_by("id")
+
+    def get(self, request, *args, **kwargs):
+        # get요청 동작
+        return self.list(request, *args, **kwargs)

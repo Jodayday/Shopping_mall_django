@@ -36,6 +36,7 @@ django 3.2.8
 [내장 템플릿 태그 및 필터](https://docs.djangoproject.com/en/4.0/ref/templates/builtins/)
 [django.contrib.humanize](https://docs.djangoproject.com/en/4.0/ref/contrib/humanize/)
 [서머노트](https://summernote.org/getting-started/#requires-html5-doctype)
+[REST_framework](https://www.django-rest-framework.org/)
 
 > 저장을 base64 형태로 sql에 저장, 만족스럽지 못한 동작 -> 따로 폴더가 생기고 거기에 차곡차곡 이미지가 저장되었으면 좋겠음
 
@@ -43,7 +44,7 @@ django 3.2.8
 
 #### 팁
 
-1.                 """
+1.                    """
           def get_context_data(self, **kwargs): # 값을 추가하고 싶을때
           context = super().get_context_data(**kwargs)
           context['form'] = OrderForm(self.request) # 폼클래스 생성하면서 request전달
@@ -61,14 +62,14 @@ django 3.2.8
 
 두개 비슷하게 사용한다.
 
-2.          """
+2.             """
           form class
 
           def form_valid(self, form): #성공했을때 실행
           def form_invalid(self, form): #실패했을때 실행
           """
 
-3.          """
+3.             """
           #클래스 상속시 django는 지원한다.
           from django.utils.decorators import method_decorator
           @method_decorator(login_level, name="dispatch")
@@ -80,7 +81,7 @@ django 3.2.8
 
           """
 
-4.        """
+4.           """
         오버라이딩
         기존함수에서 추가적인 동작을 요할때
 
@@ -110,5 +111,16 @@ django 3.2.8
         super에서 실행후 추가하거나
         추가하고 super에서 실행하거나
 
+
+        """
+
+5.        """
+        Restful API는 REST 특징을 지키면서 API를 제공
+        [RESTAPI 기본설명](https://team-platform.tistory.com/36)
+        REST_API 구현 가이드라인
+        1.URL은 정보의 자원으로 표시할것, 명사/지정/명사 까지만 사용을 권장
+        ex) products/1/orders
+
+        2. post, get, patch, delete 등 method의 행위로 표현
 
         """
