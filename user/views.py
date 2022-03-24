@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
 
 from django.views.generic import FormView
+
 # Create your views here.
 
 from user.forms import RegisterForm, LoginForm

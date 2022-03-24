@@ -2,6 +2,10 @@
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views.generic import DetailView, FormView, ListView
+from django.utils.decorators import method_decorator
+# @ 데코레이터를 사용하기
+from user.decorators import login_required, login_level
+
 
 from shopping.forms import OrderForm, ProductForm
 from shopping.models import Order, Product
@@ -18,6 +22,7 @@ class ProductListView(ListView):
     # 사용할 탬플릿 태그명
 
 
+@method_decorator(login_level, name="dispatch")
 class ProductCreateView(FormView):
     template_name = "product/register_product.html"
     form_class = ProductForm
@@ -41,6 +46,7 @@ class ProductDetail(DetailView):
         # 해당을 추가함으로써 detaill.html에 form 속성을 사용할수있음
 
 
+@method_decorator(login_required, name="dispatch")
 class OrderView(FormView):
     form_class = OrderForm
     success_url = "/shop/"
@@ -58,6 +64,7 @@ class OrderView(FormView):
         return kw
 
 
+@method_decorator(login_required, name="dispatch")
 class ProductOrderView(ListView):
     template_name = "order/order.html"
     context_object_name = "Orders"
