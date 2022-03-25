@@ -1,0 +1,16 @@
+{% extends "admin/change_list.html" %}
+<!-- 기존에 작성된 change_list html를 상속받음 -->
+{% load static %}
+
+
+{% block extrahead %}
+{{ block.super }}
+<script>
+  function order_refund_submit(obj_id){
+    jQuery("#changelist-form").append('<input type="hidden" name="obj_id" value="'+ obj_id +'">');
+    jQuery("#changelist-form").submit();
+  }
+
+</script>
+
+{% endblock %}
