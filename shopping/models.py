@@ -13,8 +13,8 @@ class Product(models.Model):
 
     class Meta:
         db_table = "product_table"
-        verbose_name = "상품들"
-        verbose_name_plural = "상품"
+        verbose_name = "상품"
+        verbose_name_plural = "상품목록"
 
     def __str__(self):
         return self.name
@@ -41,8 +41,8 @@ class Order(models.Model):
 
     class Meta:
         db_table = "Order_table"
-        verbose_name = "주문들"
-        verbose_name_plural = "주문"
+        verbose_name = "주문"
+        verbose_name_plural = "주문목록"
 
     def __str__(self):
         return "{} -> {} 주문".format(self.user, self.product)

@@ -10,6 +10,15 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ("name", 'price_style', 'stock_style', "stock_status",)
     search_fields = ("name", "price",)
 
+    def changelist_view(self, request, extra_context=None):
+        extra_context = {"title": "상품 목록"}
+        return super().changelist_view(request, extra_context)
+
+    def changeform_view(self, request, object_id=None, form_url='', extra_context=None):
+        product = Product.objects.get(pk=object_id)
+        extra_context = {'title': f'{product.name} 수정'}
+        return super().changeform_view(request, object_id, form_url, extra_context)
+
     def stock_style(self, obj):
         stock = intcomma(obj.stock)
         return f"{stock} 개"
@@ -34,6 +43,18 @@ class OrderAdmin(admin.ModelAdmin):
     list_filter = ("status",)
     # 필터 생성
     list_display = ("user", 'product', "quantity", 'status', 'styled_status')
+
+    def changelist_view(self, request, extra_context=None):
+        """내장된 함수 오버라이딩하여 list의 제목을 변경"""
+        extra_context = {"title": "주문 목록"}
+        return super().changelist_view(request, extra_context)
+
+    def changeform_view(self, request, object_id=None, form_url='', extra_context=None):
+        """내장된 함수 오버라이딩하여 개별의 제목을 변경"""
+        order = Order.objects.get(pk=object_id)
+        extra_context = {
+            'title': f'{order.user.email}의 {order.product.name} 주문정보 수정'}
+        return super().changeform_view(request, object_id, form_url, extra_context)
 
     def styled_status(self, obj):
         # 함수를 만들어 등록가능
