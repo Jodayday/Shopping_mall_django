@@ -2,6 +2,39 @@
 
 {% load humanize %}
 <!-- 보기편한 필터를 설정할수있음 -->
+
+{% block headers %}
+<script>
+  function product_detail(id){
+    $.ajax({
+    url: "/api/products/"+ id ,
+    success: function( result ) {
+        $("#product-"+id).popover({
+          html:true,
+          content:result.name + "<br/>" + result.price
+        }).popover('show');
+      }
+    });
+  }
+  function product_leave(id){
+    $("#product-"+id).popover("hide");
+  }
+
+
+  $(document).ready(function (){
+    $.ajax({
+    url: "/api/products/",
+    success: function( result ) {
+      $( "#weather-temp" ).html( "<strong>" + result + "</strong> degrees" );
+      console.log(result);
+      }
+    });
+  });
+
+</script>
+
+{% endblock %}
+
 {% block contents %}
 
 <div class="container">
@@ -29,7 +62,7 @@
             {% for product in products %}
             <tr>
               <th scope="row">{{ product.id }}</th>
-              <th ><a href="{% url 'shopping:detail' product.id  %}">{{ product.name }}</a></th>
+              <th ><a id="product-{{ product.id }}" onmouseleave="product_leave({{ product.id }});"  onmouseenter="product_detail({{ product.id }});" href="{% url 'shopping:detail' product.id  %}">{{ product.name }}</a></th>
               <th >{{ product.price|intcomma }} 원</th>
               <!-- humanize의 필터를 사용했음 -->
               <th >{{ product.stock|intcomma }}</th>
