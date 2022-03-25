@@ -2,6 +2,9 @@ from django.contrib import admin
 from django.utils.html import format_html
 # Register your models here.
 from django.contrib.humanize.templatetags.humanize import intcomma
+from django.db.models import F, Q
+# 필터에 일괄적으로 값 적용
+from django.db import transaction
 # import models
 from .models import Product, Order
 
@@ -36,13 +39,32 @@ class ProductAdmin(admin.ModelAdmin):
             return format_html(f"<b style='color:green;'>{obj.stock}</b>")
         else:
             return format_html(f"<b>{obj.stock}</b>")
+
     stock_status.short_description = "재고상태"
+    # 함수의 헤더표시를 변경
+# 액션의 이름 설정
+
+
+@admin.action(description='환불하기')
+def refund(self, request, queryset):
+    # queryset엔 체크한 애들이 들어옴
+    with transaction.atomic():
+        query1 = queryset.filter(~Q(status="환불"))
+        for query in query1:
+            query.product.stock += query.quantity
+            query.product.save()
+        query1.update(status="환불")
+    # 액션의 동작시 수량 반환
 
 
 class OrderAdmin(admin.ModelAdmin):
     list_filter = ("status",)
     # 필터 생성
     list_display = ("user", 'product', "quantity", 'status', 'styled_status')
+
+    actions = [
+        refund
+    ]
 
     def changelist_view(self, request, extra_context=None):
         """내장된 함수 오버라이딩하여 list의 제목을 변경"""
@@ -56,6 +78,7 @@ class OrderAdmin(admin.ModelAdmin):
             'title': f'{order.user.email}의 {order.product.name} 주문정보 수정'}
         return super().changeform_view(request, object_id, form_url, extra_context)
 
+    @admin.display(description="상태",)
     def styled_status(self, obj):
         # 함수를 만들어 등록가능
         if obj.status == "환불":
@@ -65,7 +88,7 @@ class OrderAdmin(admin.ModelAdmin):
         else:
             return format_html(f"<b>{obj.status}</b>")
 
-    styled_status.short_description = "상태"
+    # styled_status.short_description = "상태"
     # 함수의 헤더표시를 변경
 
 
