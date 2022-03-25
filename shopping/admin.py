@@ -1,8 +1,13 @@
 from django.contrib import admin
+
+from django.contrib.admin.models import LogEntry, CHANGE
+from django.contrib.contenttypes.models import ContentType
+# 장고의 액션에 대한 로그를 남기기위한 모듈
+
 from django.utils.html import format_html
 # Register your models here.
 from django.contrib.humanize.templatetags.humanize import intcomma
-from django.db.models import F, Q
+from django.db.models import Q
 # 필터에 일괄적으로 값 적용
 from django.db import transaction
 # import models
@@ -50,10 +55,29 @@ def refund(self, request, queryset):
     # queryset엔 체크한 애들이 들어옴
     with transaction.atomic():
         query1 = queryset.filter(~Q(status="환불"))
+        content1 = ContentType.objects.get_for_model(queryset.model)
+        # 컨텐츠 타입가져오기
         for query in query1:
             query.product.stock += query.quantity
             query.product.save()
+
+            # 로그적용
+            LogEntry.objects.log_action(
+                user_id=request.user.id,
+                # 사용자
+                content_type_id=content1.pk,
+                # 모델의 타입
+                object_id=query.pk,
+                # 해당 제품
+                object_repr=f"{query.product.name}환불처리",
+                # 링크 제목
+                action_flag=CHANGE,
+                # 1:추가(ADDTION), 2:변경(CHANGE), 3:삭제(DELETION)
+                change_message="주문환불",
+            )
+
         query1.update(status="환불")
+
     # 액션의 동작시 수량 반환
 
 
