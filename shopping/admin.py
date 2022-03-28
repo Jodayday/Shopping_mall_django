@@ -1,3 +1,4 @@
+from pprint import pprint
 from django.contrib import admin
 
 from django.contrib.admin.models import LogEntry, CHANGE
@@ -87,6 +88,8 @@ class OrderAdmin(admin.ModelAdmin):
     list_display = ("user", 'product', "quantity", 'styled_status', "button")
 
     change_list_template = "order/order_change_list.html"
+    change_form_template = "order/order_change_form.html"
+    add_form_template = "order/order_add_form.html"
     # list의 기본 템플릿을 변경함
     actions = [
         refund,
@@ -120,9 +123,6 @@ class OrderAdmin(admin.ModelAdmin):
                 content1 = ContentType.objects.get_for_model(query1.model)
                 # 컨텐츠 타입가져오기
                 for query in query1:
-                    print(query1)
-                    print(type(query))
-                    print(query)
                     query.product.stock += query.quantity
                     query.product.save()
 
@@ -145,11 +145,21 @@ class OrderAdmin(admin.ModelAdmin):
 
         return super().changelist_view(request, extra_context)
 
+    def add_view(self, request, form_url='', extra_context=None):
+        """추가 폼화면"""
+        extra_context = {}
+        extra_context['show_save_and_add_another'] = False
+        extra_context['show_save_and_continue'] = False
+        return super().add_view(request, form_url, extra_context)
+
     def change_view(self, request, object_id=None, form_url='', extra_context=None):
         """내장된 함수 오버라이딩하여 개별의 제목을 변경"""
         order = Order.objects.get(pk=object_id)
         extra_context = {
-            'title': f'{order.user.email}의 {order.product.name} 주문정보 수정키랏'}
+            'title': f'{order.user.email}의 {order.product.name} 주문정보 수정'}
+        extra_context['show_save_and_add_another'] = False
+        extra_context['show_save_and_continue'] = False
+
         return super().change_view(request, object_id, form_url, extra_context)
 
     @admin.display(description="상태",)
