@@ -1,0 +1,72 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls static admin_list %}
+{% load humanize %}
+{% load i18n admin_urls static admin_modify %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="{% url 'admin:index' %}">{% translate 'Home' %}</a>
+&rsaquo; <a href="{% url 'admin:app_list' app_label='shopping' %}">쇼핑</a>
+&rsaquo; <a href="../">주문목록</a>
+<!-- 주문목록페이지가 이전페이지라서 ..함 -->
+</div>
+{% endblock %}
+
+{% block content %}
+  <div id="content-main" class="p-5">
+    <a href="../" class="btn btn-primary">주문목록으로 가기</a>
+    <!-- 만들기 귀찮아서 product list 가져옴 -->
+    <h3>최근 일주일 주문</h3>
+    <table class="table table-light">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col" >등록번호</th>
+            <th scope="col" >상품명</th>
+            <th scope="col" >구매자</th>
+            <th scope="col" >수량</th>
+            <th scope="col" >구매날짜</th>
+          </tr>
+        </thead>
+        <tbody class="text-dark">
+          {% for order in week_data %}
+          <tr>
+            <th scope="row">{{ order.id }}</th>
+            <th >{{ order.product }}</th>
+            <th >{{ order.user }} 원</th>
+            <!-- humanize의 필터를 사용했음 -->
+            <th >{{ order.quantity|intcomma }}</th>
+            <th >{{ order.time|date:'Y-m-d H:i' }}</th>
+            <!-- django 내장 템플릿 태그 및 필터 사용  -->
+          </tr>
+          {% endfor %}
+        </tbody>
+
+      </table>
+      <h3>과거 주문</h3>
+      <table class="table table-light">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col" >등록번호</th>
+              <th scope="col" >상품명</th>
+              <th scope="col" >구매자</th>
+              <th scope="col" >수량</th>
+              <th scope="col" >구매날짜</th>
+            </tr>
+          </thead>
+          <tbody class="text-dark">
+            {% for order in data %}
+            <tr>
+              <th scope="row">{{ order.id }}</th>
+              <th >{{ order.product }}</th>
+              <th >{{ order.user }} 원</th>
+              <!-- humanize의 필터를 사용했음 -->
+              <th >{{ order.quantity|intcomma }}</th>
+              <th >{{ order.time|date:'Y-m-d H:i' }}</th>
+              <!-- django 내장 템플릿 태그 및 필터 사용  -->
+            </tr>
+            {% endfor %}
+          </tbody>
+  
+        </table>
+  </div>
+{% endblock %}

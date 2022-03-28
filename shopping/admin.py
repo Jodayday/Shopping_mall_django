@@ -1,4 +1,6 @@
-from pprint import pprint
+import datetime
+
+from django.urls import path
 from django.contrib import admin
 
 from django.contrib.admin.models import LogEntry, CHANGE
@@ -11,6 +13,8 @@ from django.contrib.humanize.templatetags.humanize import intcomma
 from django.db.models import Q
 # 필터에 일괄적으로 값 적용
 from django.db import transaction
+from django.template.response import TemplateResponse
+
 # import models
 from .models import Product, Order
 
@@ -176,6 +180,29 @@ class OrderAdmin(admin.ModelAdmin):
         if obj.status == "결제완료":
             return format_html(f"<input type='button' onclick='order_refund_submit({obj.id})' value='환불'>")
     button.short_description = "환불버튼"
+
+    def get_urls(self):
+        """url add"""
+        urls = super().get_urls()
+        add_urls = [
+            path("date_view/", self.date_view),
+        ]
+        return add_urls + urls
+        # 추가가 앞에 있어야 에러 발생 안함
+
+    def date_view(self, request):
+        "새로운 페이지 생성"
+        week_time = datetime.datetime.now() - datetime.timedelta(days=7)
+        week_order = Order.objects.filter(time__gte=week_time)
+        data = Order.objects.filter(time__lt=week_time)
+        context = dict(
+            self.admin_site.each_context(request),
+            week_data=week_order,
+            data=data,
+        )
+        # extra_context 기본값 설정
+
+        return TemplateResponse(request, "order/order_date_view.html", context)
 
 
 admin.site.register(Product, ProductAdmin)
